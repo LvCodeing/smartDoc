@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration >
+
+    <properties>
+        <!--<property name="logPath">/var/logs/examServer</property>-->
+        <property name="logPath">/Users/zsh/logs/smartDoc</property>
+    </properties>
+    <CustomLevels>
+        <CustomLevel name="FARM" intLevel="350" />
+    </CustomLevels>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
+            <!-- <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} -
+                %msg%n" /> -->
+            <!-- <PatternLayout pattern="%-d [%t] %-5p %c{1}:%L - %m%n" /> -->
+        </Console>
+
+        <RollingFile name="LogFile" filename="${logPath}/farm.log"
+                     filepattern="${logPath}/%d{yyyyMMddHHmmss}-farm.log">
+
+            <Filters>
+                <ThresholdFilter level="FARM" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="20 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
+
+        <RollingFile name="RollingFile" filename="${logPath}/flow.log"
+                     filepattern="${logPath}/%d{yyyyMMddHHmmss}-flow.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %c{1}:%L %-5p - %msg%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="20 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+
+            <Filters>
+                <ThresholdFilter level="FARM"/>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+
+        </RollingFile>
+
+        <RollingFile name="WarnFile" filename="${logPath}/warn.log"
+                     filepattern="${logPath}/%d{yyyyMMddHHmmss}-warn.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="20 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+            <Filters>
+                <ThresholdFilter level="warn"/>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="ErrorFile" filename="${logPath}/error.log"
+                     filepattern="${logPath}/%d{yyyyMMddHHmmss}-error.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="20 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+
+        <asyncRoot level="debug">
+            <AppenderRef ref="LogFile" />
+            <AppenderRef ref="WarnFile" />
+            <AppenderRef ref="RollingFile" />
+            <AppenderRef ref="ErrorFile" />
+        </asyncRoot>
+
+    </Loggers>
+
+</Configuration>
