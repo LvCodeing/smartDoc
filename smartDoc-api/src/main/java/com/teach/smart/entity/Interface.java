@@ -51,9 +51,61 @@ public class Interface extends SimpleEntity {
      */
     private String body;
 
+    @Override
+    public String getId() {
+        return id;
+    }
 
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public String getOrgId() {
+        return orgId;
+    }
 
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
 
+    public int getStatus() {
+        return status;
+    }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public List<Map> getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(List<Map> headers) {
+        this.headers = headers;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
 }
